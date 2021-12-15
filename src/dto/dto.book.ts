@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer'
-import { IsString, IsNotEmpty, IsNumber, IsDate, IsInt, MaxLength, MinLength } from 'class-validator'
+import { IsString, IsNotEmpty, IsNumber, IsDate, IsInt, MinLength } from 'class-validator'
 
 export class DTOBook {
 	@IsNotEmpty({ message: 'book name is required' })
@@ -12,6 +12,7 @@ export class DTOBook {
 
 	@IsNotEmpty({ message: 'isbn is required' })
 	@IsNumber()
+	@MinLength(8)
 	isbn: number
 
 	@IsNotEmpty({ message: 'price is required' })

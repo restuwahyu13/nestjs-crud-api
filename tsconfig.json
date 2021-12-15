@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"baseUrl": "src",
-		"target": "ES2019",
+		"target": "ESNext",
 		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"paths": {
@@ -12,10 +12,10 @@
 			"@helpers/*": ["helpers/*"],
 			"@interfaces/*": ["interfaces/*"],
 			"@libs/*": ["libs/*"],
+			"@middlewares/*": ["middlewares/*"],
 			"@models/*": ["models/*"],
 			"@modules/*": ["modules/*"],
-			"@services/*": ["services/*"],
-			"@validators/*": ["validators/*"]
+			"@services/*": ["services/*"]
 		},
 		"strict": true,
 		"importHelpers": true,
@@ -28,7 +28,6 @@
 		"emitDecoratorMetadata": true,
 		"declaration": true,
 		"resolveJsonModule": true,
-		"sourceMap": true,
 		"removeComments": true,
 		"pretty": true,
 		"strictNullChecks": false,

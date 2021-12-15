@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { AuthModule } from '@modules/auth.module'
 import { BookModule } from '@modules/book.module'
+import { JwtModule } from './libs/internal/jwt/jwt.module';
 
 @Module({
 	imports: [
@@ -22,7 +23,8 @@ import { BookModule } from '@modules/book.module'
 			autoLoadEntities: true
 		}),
 		BookModule,
-		AuthModule
+		AuthModule,
+		JwtModule
 	]
 })
 export class AppModule {}
