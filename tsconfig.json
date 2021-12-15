@@ -1,0 +1,41 @@
+{
+	"compilerOptions": {
+		"outDir": "dist",
+		"baseUrl": "src",
+		"target": "ES2019",
+		"module": "CommonJS",
+		"moduleResolution": "Node",
+		"paths": {
+			"@/*": ["*"],
+			"@controllers/*": ["controllers/*"],
+			"@dto/*": ["dto/*"],
+			"@helpers/*": ["helpers/*"],
+			"@interfaces/*": ["interfaces/*"],
+			"@libs/*": ["libs/*"],
+			"@models/*": ["models/*"],
+			"@modules/*": ["modules/*"],
+			"@services/*": ["services/*"],
+			"@validators/*": ["validators/*"]
+		},
+		"strict": true,
+		"importHelpers": true,
+		"downlevelIteration": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"allowUmdGlobalAccess": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"declaration": true,
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"removeComments": true,
+		"pretty": true,
+		"strictNullChecks": false,
+		"strictBindCallApply": false,
+		"forceConsistentCasingInFileNames": false,
+		"noImplicitAny": false,
+		"noImplicitReturns": false,
+		"noFallthroughCasesInSwitch": false
+	}
+}
