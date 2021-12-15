@@ -1,7 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm'
+import { IBook } from '@interfaces/interface.book'
 
 @Entity()
-export class Book {
+export class Book implements IBook {
 	@PrimaryGeneratedColumn()
 	id: number
 
