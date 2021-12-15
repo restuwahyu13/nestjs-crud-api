@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { Connection } from 'typeorm'
 
 import { AuthModule } from '@modules/auth.module'
 import { BookModule } from '@modules/book.module'
-import { JwtModule } from './libs/internal/jwt/jwt.module';
 
 @Module({
 	imports: [
@@ -23,8 +23,9 @@ import { JwtModule } from './libs/internal/jwt/jwt.module';
 			autoLoadEntities: true
 		}),
 		BookModule,
-		AuthModule,
-		JwtModule
+		AuthModule
 	]
 })
-export class AppModule {}
+export class AppModule {
+	constructor(private connection: Connection) {}
+}

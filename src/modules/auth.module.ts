@@ -11,15 +11,15 @@ import { LocalAuthStrategy } from '@libs/internal/passport/lib.strategy'
 
 @Module({
 	controllers: [AuthController],
-	providers: [AuthService, JwtAuthStrategy, LocalAuthStrategy],
+	providers: [AuthService, LocalAuthStrategy, JwtAuthStrategy],
 	imports: [
 		TypeOrmModule.forFeature([User]),
+		PassportModule,
 		JwtModule.register({
 			secret: process.env.JWT_SECRET,
-			signOptions: { expiresIn: '1d', audience: 'nestjs-app' },
+			signOptions: { audience: 'nestjs-app' },
 			verifyOptions: { audience: 'nestjs-app' }
-		}),
-		PassportModule
+		})
 	],
 	exports: [TypeOrmModule, AuthService]
 })

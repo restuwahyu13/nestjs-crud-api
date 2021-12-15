@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm'
-import bcryptjs from 'bcryptjs'
+import { Bcrypt } from '@libs/external/lib.bcryptjs'
 
 @Entity()
 export class User {
@@ -20,7 +20,7 @@ export class User {
 
 	@BeforeInsert()
 	async hooksCreated(): Promise<void> {
-		const hashPassword: string = await bcryptjs.hash(this.password, bcryptjs.genSaltSync(12))
+		const hashPassword: string = await Bcrypt.hashPassword(this.password)
 		this.password = hashPassword
 		this.created_at = new Date()
 	}

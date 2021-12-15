@@ -11,8 +11,8 @@ export class BookService {
 
 	async createdBook(body: DTOBook): Promise<any> {
 		try {
-			const checkBookExist: Book[] = await this.model.find({ where: { name: body.name, isbn: body.isbn } })
-			if (checkBookExist.length) {
+			const checkBookExist: Book = await this.model.findOne({ where: { name: body.name, isbn: body.isbn } })
+			if (checkBookExist) {
 				throw { code: Status.CONFLICT, message: 'Book already exist' }
 			}
 

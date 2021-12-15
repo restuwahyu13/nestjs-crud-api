@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { Injectable, UnauthorizedException, HttpStatus as Status } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import { Repository } from 'typeorm'
@@ -15,11 +15,12 @@ export class JwtAuthStrategy extends PassportStrategy(Strategy) {
 		})
 	}
 
-	async validate(payload: Record<string, any>) {
+	async validate(payload: Record<string, any>): Promise<any> {
 		const user: User = await this.model.findOne({ where: { id: payload.id, email: payload.email } })
 		if (!user) {
-			throw new UnauthorizedException()
+			throw new UnauthorizedException({ code: Status.UNAUTHORIZED, message: 'Unauthorized Access Token Expired or Invalid' })
 		}
+
 		return user
 	}
 }
