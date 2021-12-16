@@ -57,13 +57,11 @@ services:
       - node.name=els1
       - cluster.name=els-docker-cluster
       - cluster.initial_master_nodes=els1,els2,els3
-      - discovery.seed_hosts=els1,els2,els3
+      - discovery.seed_hosts=els2,els3
       - discovery.zen.minimum_master_nodes=2
-      - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
-      - els1-data:/var/lib/elasticsearch/data
-      - els1-log:/var/log/elasticsearch
+      - els1-data:/usr/share/elasticsearch/data
     networks:
       - node_networks
   ###########################
@@ -78,19 +76,17 @@ services:
       interval: 30ms
       test: ifconfig | grep broadcast && clear
     ports:
-      - 9300:9300
+      - 9300:9200
     env_file: .env
     environment:
       - node.name=els2
       - cluster.name=els-docker-cluster
       - cluster.initial_master_nodes=els1,els2,els3
-      - discovery.seed_hosts=els1,els2,els3
+      - discovery.seed_hosts=els1,els3
       - discovery.zen.minimum_master_nodes=2
-      - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
-      - els2-data:/var/lib/elasticsearch/data
-      - els2-log:/var/log/elasticsearch
+      - els2-data:/usr/share/elasticsearch/data
     networks:
       - node_networks
   ###########################
@@ -105,19 +101,17 @@ services:
       interval: 30ms
       test: ifconfig | grep broadcast && clear
     ports:
-      - 9400:9400
+      - 9400:9200
     env_file: .env
     environment:
       - node.name=els3
       - cluster.name=els-docker-cluster
       - cluster.initial_master_nodes=els1,els2,els3
-      - discovery.seed_hosts=els1,els2,els3
+      - discovery.seed_hosts=els1,els2
       - discovery.zen.minimum_master_nodes=2
-      - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
-      - els3-data:/var/lib/elasticsearch/data
-      - els3-log:/var/log/elasticsearch
+      - els3-data:/usr/share/elasticsearch/data
     networks:
       - node_networks
   ###########################
@@ -127,11 +121,8 @@ volumes:
   pg-data:
   redis-data:
   els1-data:
-  els1-log:
   els2-data:
-  els2-log:
   els3-data:
-  els3-log:
   ###########################
   # NETWORK SHARING GROUP
   ###########################
