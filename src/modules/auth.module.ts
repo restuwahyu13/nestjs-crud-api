@@ -19,6 +19,6 @@ import { Typeorm } from '@libs/lib.typeorm'
 			verifyOptions: { audience: 'nestjs-app' }
 		})
 	],
-	exports: [Typeorm.typeModule, AuthService]
+	exports: [AuthService, Typeorm.typeModule]
 })
 export class AuthModule {}

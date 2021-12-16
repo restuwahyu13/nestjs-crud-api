@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config'
 import { AuthModule } from '@modules/auth.module'
 import { BookModule } from '@modules/book.module'
 import { Typeorm } from '@libs/lib.typeorm'
+import { ElasticSeach } from '@libs/lib.elasticsearch'
 
 @Module({
 	imports: [
@@ -18,6 +19,14 @@ import { Typeorm } from '@libs/lib.typeorm'
 			entities: ['dist/models/*.js'],
 			synchronize: true,
 			autoLoadEntities: true
+		}),
+		ElasticSeach.register({
+			name: 'node-elk',
+			node: [
+				`${process.env.ELK_HOST}:${process.env.ELK_PORT_1}`,
+				`${process.env.ELK_HOST}:${process.env.ELK_PORT_2}`,
+				`${process.env.ELK_HOST}:${process.env.ELK_PORT_3}`
+			]
 		}),
 		BookModule,
 		AuthModule
