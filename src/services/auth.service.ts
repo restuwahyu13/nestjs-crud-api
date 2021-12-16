@@ -5,8 +5,8 @@ import { Request } from 'express'
 import { JwtService } from '@nestjs/jwt'
 
 import { User } from '@models/model.user'
-import { Bcrypt } from '@libs/external/lib.bcryptjs'
 import { DTORegister } from '@dto/dto.auth'
+import { Bcrypt } from '@libs/lib.bcryptjs'
 
 @Injectable()
 export class AuthService {

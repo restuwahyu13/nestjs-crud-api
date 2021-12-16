@@ -3,8 +3,8 @@ import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common'
 import { Response, Request } from 'express'
 
 import { AuthService } from '@services/auth.service'
-import { LocalAuthGuard } from '@libs/internal/passport/lib.guard'
 import { DTORegister } from '@dto/dto.auth'
+import { Passport } from '@libs/lib.passport'
 
 @Controller('api/v1/auth')
 export class AuthController {
@@ -20,7 +20,7 @@ export class AuthController {
 		}
 	}
 
-	@UseGuards(LocalAuthGuard)
+	@UseGuards(Passport.LocalAuthGuard)
 	@Post('login')
 	async loginAuth(@Res() res: Response, @Req() req: Request): Promise<OutgoingMessage> {
 		try {

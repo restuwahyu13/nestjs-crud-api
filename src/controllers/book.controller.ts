@@ -3,14 +3,14 @@ import { OutgoingMessage } from 'http'
 import { Response } from 'express'
 
 import { BookService } from '@services/book.service'
-import { JwtAuthGuard } from '@libs/internal/jwt/lib.guard'
 import { DTOBookById, DTOBook } from '@dto/dto.book'
+import { JsonWebToken } from '@libs/lib.jwt'
 
 @Controller('api/v1/book')
 export class BookController {
 	constructor(private readonly bookService: BookService) {}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JsonWebToken.JwtAuthGuard)
 	@Post()
 	async createdBook(@Res() res: Response, @Body() body: DTOBook): Promise<OutgoingMessage> {
 		try {
@@ -21,7 +21,7 @@ export class BookController {
 		}
 	}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JsonWebToken.JwtAuthGuard)
 	@Get()
 	async getAllBooks(@Res() res: Response): Promise<OutgoingMessage> {
 		try {
@@ -32,7 +32,7 @@ export class BookController {
 		}
 	}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JsonWebToken.JwtAuthGuard)
 	@Get(':id')
 	async getBookById(@Res() res: Response, @Param() params: DTOBookById): Promise<OutgoingMessage> {
 		try {
@@ -43,7 +43,7 @@ export class BookController {
 		}
 	}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JsonWebToken.JwtAuthGuard)
 	@Delete(':id')
 	async deleteBookById(@Res() res: Response, @Param() params: DTOBookById): Promise<OutgoingMessage> {
 		try {
@@ -54,7 +54,7 @@ export class BookController {
 		}
 	}
 
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(JsonWebToken.JwtAuthGuard)
 	@Put(':id')
 	async updatedBookById(@Res() res: Response, @Body() body: DTOBook, @Param() params: DTOBookById): Promise<OutgoingMessage> {
 		try {

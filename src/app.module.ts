@@ -1,17 +1,14 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { Connection } from 'typeorm'
 
 import { AuthModule } from '@modules/auth.module'
 import { BookModule } from '@modules/book.module'
+import { Typeorm } from '@libs/lib.typeorm'
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({
-			isGlobal: true
-		}),
-		TypeOrmModule.forRoot({
+		ConfigModule.forRoot({ isGlobal: true }),
+		Typeorm.forRoot({
 			type: 'postgres',
 			host: process.env.DB_HOST,
 			port: +process.env.DB_PORT,
@@ -26,6 +23,4 @@ import { BookModule } from '@modules/book.module'
 		AuthModule
 	]
 })
-export class AppModule {
-	constructor(private connection: Connection) {}
-}
+export class AppModule {}

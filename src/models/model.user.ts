@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm'
 import { IAuth } from '@interfaces/interface.auth'
-import { Bcrypt } from '@libs/external/lib.bcryptjs'
+import { Bcrypt } from '@/libs/lib.bcryptjs'
 
 @Entity()
 export class User implements IAuth {
