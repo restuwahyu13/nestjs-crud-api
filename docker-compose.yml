@@ -10,14 +10,14 @@ services:
       start_period: 60ms
       timeout: 130ms
       interval: 30ms
-      test: ifconfig | grep broadcast && clear
+      test: ifconfig | grep broadcast
     ports:
       - 5432:5432
     env_file: .env
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - PG_DATABASE=${DB_NAME}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - pg-data:/var/lib/postgres/data
     networks:
@@ -32,7 +32,7 @@ services:
       start_period: 60ms
       timeout: 130ms
       interval: 30ms
-      test: ifconfig | grep broadcast && clear
+      test: ifconfig | grep broadcast
     ports:
       - 6379:6379
     volumes:
@@ -49,7 +49,7 @@ services:
       start_period: 60ms
       timeout: 130ms
       interval: 30ms
-      test: ifconfig | grep broadcast && clear
+      test: ifconfig | grep broadcast
     ports:
       - 9200:9200
     env_file: .env
@@ -59,7 +59,7 @@ services:
       - cluster.initial_master_nodes=els1,els2,els3
       - discovery.seed_hosts=els2,els3
       - discovery.zen.minimum_master_nodes=2
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     volumes:
       - els1-data:/usr/share/elasticsearch/data
     networks:
@@ -74,7 +74,7 @@ services:
       start_period: 60ms
       timeout: 130ms
       interval: 30ms
-      test: ifconfig | grep broadcast && clear
+      test: ifconfig | grep broadcast
     ports:
       - 9300:9200
     env_file: .env
@@ -84,7 +84,7 @@ services:
       - cluster.initial_master_nodes=els1,els2,els3
       - discovery.seed_hosts=els1,els3
       - discovery.zen.minimum_master_nodes=2
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     volumes:
       - els2-data:/usr/share/elasticsearch/data
     networks:
@@ -99,7 +99,7 @@ services:
       start_period: 60ms
       timeout: 130ms
       interval: 30ms
-      test: ifconfig | grep broadcast && clear
+      test: ifconfig | grep broadcast
     ports:
       - 9400:9200
     env_file: .env
@@ -109,7 +109,7 @@ services:
       - cluster.initial_master_nodes=els1,els2,els3
       - discovery.seed_hosts=els1,els2
       - discovery.zen.minimum_master_nodes=2
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
     volumes:
       - els3-data:/usr/share/elasticsearch/data
     networks:
