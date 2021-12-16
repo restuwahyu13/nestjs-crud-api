@@ -1,0 +1,139 @@
+version: '3.8'
+services:
+  ###########################
+  # POSTGRES SERVICES
+  ###########################
+  pg:
+    image: postgres:14-alpine
+    restart: always
+    healthcheck:
+      start_period: 60ms
+      timeout: 130ms
+      interval: 30ms
+      test: ifconfig | grep broadcast && clear
+    ports:
+      - 5432:5432
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - PG_DATABASE=${DB_NAME}
+    volumes:
+      - pg-data:/var/lib/postgres/data
+    networks:
+      - node_networks
+  ###########################
+  # REDIS SERVICES
+  ###########################
+  redis:
+    image: redis:6.2.6-alpine
+    restart: always
+    healthcheck:
+      start_period: 60ms
+      timeout: 130ms
+      interval: 30ms
+      test: ifconfig | grep broadcast && clear
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/var/lib/redis/data
+    networks:
+      - node_networks
+  ###########################
+  # ELK SERVICES NODE 1
+  ###########################
+  els1:
+    image: docker.elastic.co/elasticsearch/${ELK_VERSION}
+    restart: always
+    healthcheck:
+      start_period: 60ms
+      timeout: 130ms
+      interval: 30ms
+      test: ifconfig | grep broadcast && clear
+    ports:
+      - 9200:9200
+    env_file: .env
+    environment:
+      - node.name=els1
+      - cluster.name=els-docker-cluster
+      - cluster.initial_master_nodes=els1,els2,els3
+      - discovery.seed_hosts=els1,els2,els3
+      - discovery.zen.minimum_master_nodes=2
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+    volumes:
+      - els1-data:/var/lib/elasticsearch/data
+      - els1-log:/var/log/elasticsearch
+    networks:
+      - node_networks
+  ###########################
+  # ELK SERVICES NODE 2
+  ###########################
+  els2:
+    image: docker.elastic.co/elasticsearch/${ELK_VERSION}
+    restart: always
+    healthcheck:
+      start_period: 60ms
+      timeout: 130ms
+      interval: 30ms
+      test: ifconfig | grep broadcast && clear
+    ports:
+      - 9300:9300
+    env_file: .env
+    environment:
+      - node.name=els2
+      - cluster.name=els-docker-cluster
+      - cluster.initial_master_nodes=els1,els2,els3
+      - discovery.seed_hosts=els1,els2,els3
+      - discovery.zen.minimum_master_nodes=2
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+    volumes:
+      - els2-data:/var/lib/elasticsearch/data
+      - els2-log:/var/log/elasticsearch
+    networks:
+      - node_networks
+  ###########################
+  # ELK SERVICES NODE 3
+  ###########################
+  els3:
+    image: docker.elastic.co/elasticsearch/${ELK_VERSION}
+    restart: always
+    healthcheck:
+      start_period: 60ms
+      timeout: 130ms
+      interval: 30ms
+      test: ifconfig | grep broadcast && clear
+    ports:
+      - 9400:9400
+    env_file: .env
+    environment:
+      - node.name=els3
+      - cluster.name=els-docker-cluster
+      - cluster.initial_master_nodes=els1,els2,els3
+      - discovery.seed_hosts=els1,els2,els3
+      - discovery.zen.minimum_master_nodes=2
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+    volumes:
+      - els3-data:/var/lib/elasticsearch/data
+      - els3-log:/var/log/elasticsearch
+    networks:
+      - node_networks
+  ###########################
+  # VOLUME PERSISTENT DATA
+  ###########################
+volumes:
+  pg-data:
+  redis-data:
+  els1-data:
+  els1-log:
+  els2-data:
+  els2-log:
+  els3-data:
+  els3-log:
+  ###########################
+  # NETWORK SHARING GROUP
+  ###########################
+networks:
+  node_networks:
