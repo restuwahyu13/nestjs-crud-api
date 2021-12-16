@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
-import { AuthModule } from '@modules/auth.module'
-import { BookModule } from '@modules/book.module'
 import { Typeorm } from '@libs/lib.typeorm'
 import { ElasticSeach } from '@libs/lib.elasticsearch'
+import { Redis } from '@libs/lib.redis'
+import { AuthModule } from '@modules/auth.module'
+import { BookModule } from '@modules/book.module'
 
 @Module({
 	imports: [
@@ -21,15 +22,20 @@ import { ElasticSeach } from '@libs/lib.elasticsearch'
 			autoLoadEntities: true
 		}),
 		ElasticSeach.register({
-			name: 'node-elk',
 			node: [
 				`${process.env.ELK_HOST}:${process.env.ELK_PORT_1}`,
 				`${process.env.ELK_HOST}:${process.env.ELK_PORT_2}`,
 				`${process.env.ELK_HOST}:${process.env.ELK_PORT_3}`
 			]
 		}),
-		BookModule,
-		AuthModule
+		Redis.register({
+			host: process.env.REDIS_HOST,
+			port: +process.env.REDIS_PORT,
+			enableReadyCheck: true,
+			enableAutoPipelining: true
+		}),
+		AuthModule,
+		BookModule
 	]
 })
 export class AppModule {}
